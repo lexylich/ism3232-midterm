@@ -57,3 +57,36 @@ def requires_proof(total: float) -> bool:
 def needs_overnight_run(copies: int, total: float) -> bool:
     """Return True when the job needs an overnight press run."""
     return copies > OVERNIGHT_COPIES_LIMIT or total > OVERNIGHT_TOTAL_LIMIT
+
+
+def total_invoiced(jobs: list) -> float:
+    """Return the sum of the job totals for every job in the list."""
+    total = 0.0
+    for job in jobs:
+        total += calculate_job_total(
+            job["copy_price"], job["copies"], job["student_org"]
+        )
+    return total
+
+
+def largest_job(jobs: list) -> str:
+    """Return the title of the job with the largest job total."""
+    largest_title = ""
+    largest_total = 0.0
+    for job in jobs:
+        job_total = calculate_job_total(
+            job["copy_price"], job["copies"], job["student_org"]
+        )
+        if largest_title == "" or job_total > largest_total:
+            largest_title = job["title"]
+            largest_total = job_total
+    return largest_title
+
+
+def format_job_line(title: str, total: float, proof: bool, overnight_run: bool) -> str:
+    """Return one report line for a job."""
+    proof_text = "yes" if proof else "no"
+    overnight_text = "yes" if overnight_run else "no"
+    return (
+        f"{title}: ${total:.2f} | proof: {proof_text} | overnight run: {overnight_text}"
+    )
