@@ -10,6 +10,12 @@ NO_DISCOUNT = 0.0
 # Student organization bonus
 STUDENT_ORG_BONUS = 0.05
 
+# Fees and thresholds
+SETUP_FEE_LIMIT = 40
+SETUP_FEE = 15
+PROOF_LIMIT = 300
+OVERNIGHT_COPIES_LIMIT = 500
+OVERNIGHT_TOTAL_LIMIT = 400
 
 def calculate_print_cost(copy_price: float, copies: int) -> float:
     """Return the print cost before any discount."""
@@ -27,14 +33,6 @@ def get_volume_discount(copies: int, student_org: bool = False) -> float:
     if student_org:
         discount += STUDENT_ORG_BONUS
     return discount
-
-
-# Fees and thresholds
-SETUP_FEE_LIMIT = 40
-SETUP_FEE = 15
-PROOF_LIMIT = 300
-OVERNIGHT_COPIES_LIMIT = 500
-OVERNIGHT_TOTAL_LIMIT = 400
 
 
 def calculate_job_total(
